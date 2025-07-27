@@ -1,54 +1,56 @@
-// Three.js scene
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-camera.position.z = 13;
+// Переключение страниц
+const pages = document.querySelectorAll(".page");
+const upBtn = document.getElementById("upBtn");
+const downBtn = document.getElementById("downBtn");
+let currentIndex = 0;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById("webgl-bg").appendChild(renderer.domElement);
+pages[currentIndex].classList.add("active");
 
-// Чёрная спираль
-const geometry = new THREE.TorusGeometry(11, 4, 15, 50);
-const material = new THREE.MeshBasicMaterial({
-  color: 0x000000, // чёрный цвет
-  wireframe: true,
-});
-const torus = new THREE.Mesh(geometry, material);
-scene.add(torus);
-
-// Анимация
-function animate() {
-  requestAnimationFrame(animate);
-  torus.rotation.x += 0.003;
-  torus.rotation.y += 0.005;
-  renderer.render(scene, camera);
+function showPage(index) {
+  if (index < 0 || index >= pages.length) return;
+  pages.forEach((page, i) => {
+    page.classList.toggle("active", i === index);
+  });
+  currentIndex = index;
 }
-animate();
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+
+upBtn.onclick = () => showPage(currentIndex - 1);
+downBtn.onclick = () => showPage(currentIndex + 1);
+
+// Поддержка прокрутки мышкой
+window.addEventListener("wheel", (e) => {
+  if (e.deltaY > 0) showPage(currentIndex + 1);
+  else showPage(currentIndex - 1);
 });
 
-// Управление секциями
-let currentScreen = 0;
-const container = document.getElementById("container");
+// Жидкая анимация на canvas
+const canvas = document.getElementById("liquidCanvas");
+const ctx = canvas.getContext("2d");
+let w, h;
 
-function goDown() {
-  if (currentScreen < 1) {
-    currentScreen++;
-    container.style.transform = `translateY(-${currentScreen * 100}vh)`;
-  }
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
 }
+resize();
+window.addEventListener("resize", resize);
 
-function goUp() {
-  if (currentScreen > 0) {
-    currentScreen--;
-    container.style.transform = `translateY(-${currentScreen * 100}vh)`;
+let t = 0;
+function drawLiquid() {
+  ctx.clearRect(0, 0, w, h);
+  ctx.beginPath();
+  ctx.moveTo(0, h / 2);
+
+  for (let x = 0; x < w; x++) {
+    const y =
+      h / 2 + Math.sin(x * 0.01 + t) * 30 + Math.cos(x * 0.02 + t * 1.5) * 20;
+    ctx.lineTo(x, y);
   }
+
+  ctx.strokeStyle = "#6ce5ff";
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  t += 0.03;
+  requestAnimationFrame(drawLiquid);
 }
+drawLiquid();
