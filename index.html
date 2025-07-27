@@ -3,58 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Portfolio — Dzhangazy</title>
+    <title>dzhangazy — Portfolio</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- WebGL фон со спиралью -->
-    <div id="webgl-bg"></div>
+    <div id="app">
+      <!-- Страница 1 -->
+      <section class="page" id="page1">
+        <div class="content">
+          <h1 class="brand">dzhangazy</h1>
+          <div class="animated-shape"></div>
+          <p class="subtitle">Software Engineer</p>
 
-    <!-- Контейнер секций -->
-    <div id="container">
-      <!-- Секция 1 -->
-      <section class="screen" id="screen1">
-        <div class="floating-portfolio">PORTFOLIO</div>
-        <div class="centered-text">
-          <h1>dzhangazy</h1>
-          <p>Software Engineer</p>
-        </div>
-
-        <!-- Соц. иконки -->
-        <div class="socials">
-          <a href="https://www.instagram.com/dbktzhvn/" target="_blank"
-            ><img src="assets/instagram.svg" alt="Instagram"
-          /></a>
-          <a href="https://m.vk.com/feelinginmysoul" target="_blank"
-            ><img src="assets/vk.svg" alt="VK"
-          /></a>
-          <a href="https://t.me/dzhangazy" target="_blank"
-            ><img src="assets/telegram.svg" alt="Telegram"
-          /></a>
-          <a href="https://github.com/dzhangazy" target="_blank"
-            ><img src="assets/github.svg" alt="GitHub"
-          /></a>
+          <div class="socials">
+            <a href="https://www.instagram.com/dbktzhvn/" target="_blank"
+              ><img src="assets/instagram.svg" alt="Instagram"
+            /></a>
+            <a href="https://m.vk.com/feelinginmysoul" target="_blank"
+              ><img src="assets/vk.svg" alt="VK"
+            /></a>
+            <a href="https://t.me/dzhangazy" target="_blank"
+              ><img src="assets/telegram.svg" alt="Telegram"
+            /></a>
+            <a href="https://github.com/dzhangazy" target="_blank"
+              ><img src="assets/github.svg" alt="GitHub"
+            /></a>
+          </div>
         </div>
       </section>
 
-      <!-- Секция 2 -->
-      <section class="screen" id="screen2">
-        <div class="floating-portfolio">PORTFOLIO</div>
-        <div class="centered-text">
-          <h2>My projects</h2>
-          <p>Здесь будет список моих работ</p>
+      <!-- Страница 2 -->
+      <section class="page" id="page2">
+        <canvas id="liquidCanvas"></canvas>
+        <div class="content with-canvas">
+          <h2>My Projects</h2>
+          <p>Список проектов, описание и ссылки</p>
         </div>
       </section>
+
+      <!-- Кнопки прокрутки -->
+      <div class="scroll-controls">
+        <button id="upBtn">⬆</button>
+        <button id="downBtn">⬇</button>
+      </div>
     </div>
 
-    <!-- Кнопки перехода -->
-    <div class="scroll-buttons">
-      <button onclick="goUp()">↑</button>
-      <button onclick="goDown()">↓</button>
-    </div>
-
-    <!-- Скрипты -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
